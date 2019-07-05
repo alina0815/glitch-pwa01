@@ -1,0 +1,22 @@
+{
+  "name": "my first app - pwa01",
+  "short_name": "pwa01",
+  "icons": [{
+      "src": "https://cdn.glitch.com/526f2c46-c695-42d4-ae1b-84a99245895c%2Ficon-a-144.png?v=1562332468977",
+      "sizes": "144x144",
+      "type": "image/png"
+    }, {
+      "src": "https://cdn.glitch.com/526f2c46-c695-42d4-ae1b-84a99245895c%2Ficon-a-192.png?v=1562334960211",
+      "sizes": "192x192",
+      "type": "image/png"
+    }, {
+      "src": "https://cdn.glitch.com/526f2c46-c695-42d4-ae1b-84a99245895c%2Ficon-a-512.png?v=1562334960278",
+      "sizes": "512x512",
+      "type": "image/png"
+    }],
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#3E4EB8",
+  "theme_color": "#2F3BA2",
+  "gcm_sender_id": "653317226796"
+}

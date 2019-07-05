@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A simple pwa app">
+  <title>PWA-01</title>
+  <!-- Add link rel manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <!-- Add iOS meta tags and icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Weather PWA">
+  <link rel="apple-touch-icon" href="/images/icons/icon-a-152.png">
+  <!-- Add meta theme-color -->
+  <meta name="theme-color" content="#2F3BA2" />
+  
+  <link rel="stylesheet" type="text/css" href="/style.css">
+
+​
+</head>
+<body>
+​	<h1>Hello from PWA01</h1>
+  <p>hash: 1234567
+  </p>
+	<button onclick="window.location.reload();">Refresh Page</button>
+  <br/>
+    <button class="js-push-button">Subscribe to Push Notifications</button>
+    
+   <script>
+    // Register service worker.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then((reg) => {
+              console.log('Service worker registered.', reg);
+            });
+      });
+    }
+  </script>
+
+</body>
+</html>
