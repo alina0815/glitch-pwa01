@@ -2,12 +2,24 @@
   "name": "my first app - pwa01",
   "short_name": "pwa01",
   "icons": [{
+    "src": "/images/icons/icon-a-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }, {
       "src": "/images/icons/icon-a-144.png",
       "sizes": "144x144",
       "type": "image/png"
     }, {
+      "src": "/images/icons/icon-a-152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    }, {
       "src": "/images/icons/icon-a-192.png",
       "sizes": "192x192",
+      "type": "image/png"
+    }, {
+      "src": "/images/icons/icon-a-256.png",
+      "sizes": "256x256",
       "type": "image/png"
     }, {
       "src": "/images/icons/icon-a-512.png",
