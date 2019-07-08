@@ -47,3 +47,10 @@ button:active {
   transform: translateY(4px);
 }
 
+.is-invisible {
+  opacity: 0;
+}
+
+.subscription-details {
+  transition: opacity 1s;
+}

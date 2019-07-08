@@ -22,23 +22,26 @@
 </head>
 <body>
 ​	<h1>Hello from PWA01</h1>
-  <p>hash: 1234567
+  <p>hash: 1234567891234
   </p>
 	<button onclick="window.location.reload();">Refresh Page</button>
   <br/>
-    <button class="js-push-button">Subscribe to Push Notifications</button>
+  <button class="js-push-btn">Subscribe to Push Notifications</button>
     
-   <script>
-    // Register service worker.
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then((reg) => {
-              console.log('Service worker registered.', reg);
-            });
-      });
-    }
-  </script>
+  <h3>
+    Substriction:
+  </h3>
+  <p class="subscription-info"></p>
+  <section class="subscription-details js-subscription-details is-invisible">
+    <p>
+      your subscription code:
+    </p>
+      <pre><input type="text" class="js-subscription-json"/></pre>
+    <button class="js-copy-subs-code">Copy code</button>
+    </section>
+  
+  
+  <script src="scripts/main.js"></script>
 
 </body>
 </html>

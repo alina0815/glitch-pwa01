@@ -55,15 +55,25 @@ evt.respondWith(
 });
 
 self.addEventListener('push', function(event) {
-  var title = 'Yay a message.';
-  var body = 'We have received a push message.';
-  //var icon = '/images/smiley.svg';
-  var tag = 'simple-push-example-tag';
+  console.log('[Service Worker] Push Received.');
+  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+
+  const title = 'Push Codelab';
+  const options = {
+    body: 'MSG: '+event.data.text(),
+    icon: 'images/icon.png',
+    badge: 'images/badge.png'
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', function(event) {
+  console.log('[Service Worker] Notification click Received.');
+  debugger;
+  event.notification.close();
+
   event.waitUntil(
-    self.registration.showNotification(title, {
-      body: body,
-    //  icon: icon,
-      tag: tag
-    })
+    clients.openWindow('https://developers.google.com/web/')
   );
 });
