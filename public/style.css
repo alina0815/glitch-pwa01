@@ -54,3 +54,7 @@ button:active {
 .subscription-details {
   transition: opacity 1s;
 }
+
+img {
+  width: 300px;
+}

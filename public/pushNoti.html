@@ -21,16 +21,34 @@
 ​
 </head>
 <body>
-​	<h1>Home - PWA01</h1>
+​	<h1>PushNoti</h1>
   <p>hash: 12345678912345
   </p>
 	<button onclick="window.location.reload();">Refresh Page</button>
+  <button onclick="window.history.back();">Go home</button>
+  <br/>
+  <button class="js-push-btn">Subscribe to Push Notifications</button>
+  <div>
+    <p>publickey:</p>
+    <input type="text" class="noti-public-key-text"/>
+  </div>
+    
+  <h3>
+    Substriction:
+  </h3>
+  <p class="subscription-info"></p>
   <br/>
   
-  <button onclick="window.location.href='/pushNoti.html'">Go to substribe</button>
-  <br/>
-  <button onclick="window.location.href='/photoManager.html'">Go to photo manager</button>
-   
+  <section class="subscription-details js-subscription-details is-invisible">
+    <p>
+      your subscription code:
+    </p>
+      <pre><input type="text" class="js-subscription-json"/></pre>
+    <button class="js-copy-subs-code">Copy code</button>
+  </section>
+  
+  
+  <script src="scripts/main.js"></script>
 
 </body>
 </html>

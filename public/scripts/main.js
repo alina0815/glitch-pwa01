@@ -1,6 +1,6 @@
 'use strict';
 
-const applicationServerPublicKey = 'BPmyxJjgJ1eDiml8ukuzSNyhC4378frQsJ6t9PugXL_mD5m63DC-ublHSH09mg1ElcVt0KZ_1ad895mZCEiI1HU';
+let applicationServerPublicKey = 'BJHNavID1buTSCGMNw76FczPiVzXC_HTt2ibyt20PsiDRTyspk5IdVSu-I8PILXvhJTxw4W-Pb7QVmoz3CU682c';
 
 const pushButton = document.querySelector('.js-push-btn');
 const copyCodeButton = document.querySelector('.js-copy-subs-code');
@@ -29,6 +29,8 @@ function urlB64ToUint8Array(base64String) {
 function initializeUI() {
 	pushButton.addEventListener('click', function() {
 		pushButton.disabled = true;
+    applicationServerPublicKey=document.querySelector('.noti-public-key-text').value;
+    console.log(applicationServerPublicKey)
 		if (isSubscribed) {
 		  unsubscribeUser();
 		} else {
@@ -77,6 +79,7 @@ function subscribeUser() {
   })
   .then(function(subscription) {
     console.log('User is subscribed.');
+    subscribeElem.textContent="status: User is subscribed."
 
     updateSubscriptionOnServer(subscription);
 
@@ -104,6 +107,7 @@ function unsubscribeUser() {
     updateSubscriptionOnServer(null);
 
     console.log('User is unsubscribed.');
+    subscribeElem.textContent="status: User is unsubscribed."
     isSubscribed = false;
 
     updateBtn();
@@ -114,7 +118,6 @@ function updateSubscriptionOnServer(subscription) {
   // TODO: Send subscription to application server
 
   const subscriptionJson = document.querySelector('.js-subscription-json');
-  debugger
   const subscriptionDetails =
     document.querySelector('.js-subscription-details');
 
