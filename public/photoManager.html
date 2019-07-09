@@ -28,10 +28,8 @@
   <p>hash: 12345678912345
   </p>
 	<button onclick="window.location.reload();"><i class="fa fa-refresh"></i> Refresh</button>
-  
   <button onclick="window.history.back();"><i class="fa fa-home"></i> Go home</button>
-   <button onclick="clearGallery()">Clear gallery</button>
-  <br/>
+  <button onclick="clearGallery()" id="btn_clearGallery" style="visibility: hidden"><i class="fa fa-trash"></i> Clear gallery</button>
   
   <h3>Get picture from</h3>
 
@@ -45,11 +43,11 @@
   <script>
     const fileInput = document.getElementById('file-input');
     const output = document.getElementById('output');
+    const btn_clearGallery = document.getElementById('btn_clearGallery');
     
     fileInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
     
     function doSomethingWithFiles(fileList) {
-      debugger;
       let file = null;
       let node = null;
       for (let i = 0; i < fileList.length; i++) {
@@ -60,13 +58,14 @@
             node.src = URL.createObjectURL(file);
             document.getElementById("gallery").appendChild(node);
             
-            uploadPhotoAsFile("alina", file)
+            btn_clearGallery.style.visibility = "visible"
           }
         }
       }
     }
     
     function clearGallery() {
+      document.getElementById('btn_clearGallery').style.visibility = "hidden"
       let myNode = document.getElementById("gallery");
       while (myNode.firstChild) {
           myNode.removeChild(myNode.firstChild);
