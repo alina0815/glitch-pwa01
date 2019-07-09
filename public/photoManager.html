@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A simple pwa app">
+  <title>PWA-01</title>
+  <!-- Add link rel manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <!-- Add iOS meta tags and icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Weather PWA">
+  <link rel="apple-touch-icon" href="/images/icons/icon-a-152.png">
+  <!-- Add meta theme-color -->
+  <meta name="theme-color" content="#2F3BA2" />
+  
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+​
+</head>
+<body>
+​	<h1>Photo manager</h1>
+  <p>hash: 12345678912345
+  </p>
+	<button onclick="window.location.reload();"><i class="fa fa-refresh"></i> Refresh</button>
+  <button onclick="window.history.back();"><i class="fa fa-home"></i> Go home</button>
+  <button onclick="clearGallery()" id="btn_clearGallery" style="visibility: hidden"><i class="fa fa-trash"></i> Clear gallery</button>
+  
+  <h3>Get picture from</h3>
+
+  camera: <input type="file" accept="image/*" capture="environment"><br/><br/>
+  camera/file: <input type="file" accept="image/*" id="file-input"><br/>
+   
+  
+  <div id="gallery">
+  </div>
+    
+  <script>
+    const fileInput = document.getElementById('file-input');
+    const output = document.getElementById('output');
+    const btn_clearGallery = document.getElementById('btn_clearGallery');
+    
+    fileInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
+    
+    function doSomethingWithFiles(fileList) {
+      let file = null;
+      let node = null;
+      for (let i = 0; i < fileList.length; i++) {
+        if (fileList[i].type.match(/^image\//)) {
+          file = fileList[i];
+          if (file !== null) {
+            node = document.createElement("img");
+            node.src = URL.createObjectURL(file);
+            document.getElementById("gallery").appendChild(node);
+            
+            btn_clearGallery.style.visibility = "visible"
+          }
+        }
+      }
+    }
+    
+    function clearGallery() {
+      document.getElementById('btn_clearGallery').style.visibility = "hidden"
+      let myNode = document.getElementById("gallery");
+      while (myNode.firstChild) {
+          myNode.removeChild(myNode.firstChild);
+      }
+    }
+        
+  </script>
+  
+  
+</body>
+</html>
