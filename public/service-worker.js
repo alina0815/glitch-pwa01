@@ -5,7 +5,9 @@ const CACHE_NAME = 'static-cache-v1';
 
 // Add list of files to cache here.
 const FILES_TO_CACHE = [
+  '/index.html',
   '/offline.html',
+  '/offline2.html'
 ];
 
 self.addEventListener('install', (evt) => {
@@ -48,7 +50,7 @@ evt.respondWith(
         .catch(() => {
           return caches.open(CACHE_NAME)
               .then((cache) => {
-                return cache.match('offline.html');
+                return cache.match('index.html');
               });
         })
 );

@@ -1,5 +1,7 @@
 'use strict';
 
+//TODO: KWESTIA SUBSCRIPTION NOTYFIKACJE POWINNY BYC W PLIKU HTML
+
 let applicationServerPublicKey = 'BJHNavID1buTSCGMNw76FczPiVzXC_HTt2ibyt20PsiDRTyspk5IdVSu-I8PILXvhJTxw4W-Pb7QVmoz3CU682c';
 
 const pushButton = document.querySelector('.js-push-btn');
@@ -10,6 +12,7 @@ const subscribeElem = document.querySelector('.subscription-info');
 
 let isSubscribed = false;
 let swRegistration = null;
+
 
 function urlB64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -147,19 +150,19 @@ if (Notification.permission === 'denied') {
 }
 
 if ('serviceWorker' in navigator && 'PushManager' in window) {
-  console.log('Service Worker and Push is supported');
+      console.log('Service Worker and Push is supported');
 
-  navigator.serviceWorker.register('service-worker.js')
-  .then(function(swReg) {
-    console.log('Service Worker is registered', swReg);
+      navigator.serviceWorker.register('service-worker.js')
+      .then(function(swReg) {
+        console.log('Service Worker is registered', swReg);
 
-    swRegistration = swReg;
-    initializeUI();
-  })
-  .catch(function(error) {
-    console.error('Service Worker Error', error);
-  });
-} else {
-  console.warn('Push messaging is not supported');
-  pushButton.textContent = 'Push Not Supported';
-}
+        swRegistration = swReg;
+        initializeUI()
+      })
+      .catch(function(error) {
+        console.error('Service Worker Error', error);
+      });
+    } else {
+      console.warn('Push messaging is not supported');
+      pushButton.textContent = 'Push Not Supported';
+    }
