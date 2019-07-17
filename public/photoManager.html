@@ -16,7 +16,7 @@
   <!-- Add meta theme-color -->
   <meta name="theme-color" content="#2F3BA2" />
   
-  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
@@ -24,22 +24,27 @@
 ​
 </head>
 <body>
-​	<h1>Photo manager</h1>
-  <p>hash: 12345678912345
-  </p>
-	<button onclick="window.location.reload();"><i class="fa fa-refresh"></i> Refresh</button>
-  <button onclick="window.history.back();"><i class="fa fa-home"></i> Go home</button>
-  <button onclick="clearGallery()" id="btn_clearGallery" style="visibility: hidden"><i class="fa fa-trash"></i> Clear gallery</button>
-  
-  <h3>Get picture from</h3>
-
-  camera: <input type="file" accept="image/*" capture="environment"><br/><br/>
-  camera/file: <input type="file" accept="image/*" id="file-input"><br/>
-   
-  
-  <div id="gallery">
+  <div class="header">
+    <h1>Photo manager</h1>
   </div>
+  <div class="navbar">
+    <a onclick="window.location.reload();" href="#" class="active"><i class="fa fa-refresh"></i> Refresh</a>
+    <a onclick="window.history.back();" href="#" class="right"><i class="fa fa-home"></i> Go home</a>
+  </div>
+  <div class="content">
+    <p>hash: 12345678912345</p>
+  
+  ​	<button onclick="clearGallery()" id="btn_clearGallery" style="visibility: hidden"><i class="fa fa-trash"></i> Clear gallery</button>
+
+    <h3>Get picture from</h3>
+
+    camera: <input type="file" accept="image/*" capture="environment"><br/><br/>
+    camera/file: <input type="file" accept="image/*" id="file-input"><br/>
+
+
+    <div id="gallery"></div>
     
+  </div>
   <script>
     const fileInput = document.getElementById('file-input');
     const output = document.getElementById('output');

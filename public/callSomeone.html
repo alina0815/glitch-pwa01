@@ -16,30 +16,35 @@
   <!-- Add meta theme-color -->
   <meta name="theme-color" content="#2F3BA2" />
   
-  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 ​
 </head>
 <body>
-​	<h1>Call someone</h1>
-  <p>hash: 12345678912345
-  </p>
-	<button onclick="window.location.reload();"><i class="fa fa-refresh"></i> Refresh</button>
-  <button onclick="window.history.back();"><i class="fa fa-home"></i> Go home</button>
-  
-  <br/>
-  <br/>
-  dziala w mobile safari i chrome dla androida. 
-  <br/>
-  przykład tel - w element a/href "tel:+1-303-499-7111"
-  <br/>
-  przykład sms - w element a/href "sms:{number}?body={type%20something}"
-  <br/>
-  <br/>
-  call: <a href="tel:+1-303-499-7111">+1 (303) 499-7111</a>
-  <br/>
-  sms: <a href="sms:+1-303-499-7111?body=Interested%20in%20your%20product">Sms Me!</a>
-   
+  <div class="header">
+    <h1>Call someone</h1>
+  </div>
+  <div class="navbar">
+    <a onclick="window.location.reload();" href="#" class="active"><i class="fa fa-refresh"></i> Refresh</a>
+    <a onclick="window.history.back();" href="#" class="right"><i class="fa fa-home"></i> Go home</a>
+  </div>
+  <div class="content">
+    <p>hash: 12345678912345
+    </p>
+
+    <br/>
+    <br/>
+    dziala w mobile safari i chrome dla androida. 
+    <br/>
+    przykład tel - w element a/href "tel:+1-303-499-7111"
+    <br/>
+    przykład sms - w element a/href "sms:{number}?body={type%20something}"
+    <br/>
+    <br/>
+    call: <a href="tel:+1-303-499-7111">+1 (303) 499-7111</a>
+    <br/>
+    sms: <a href="sms:+1-303-499-7111?body=Interested%20in%20your%20product">Sms Me!</a>
+  </div>
 
 </body>
 </html>

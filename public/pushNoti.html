@@ -16,69 +16,48 @@
   <!-- Add meta theme-color -->
   <meta name="theme-color" content="#2F3BA2" />
   
-  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 ​
 </head>
 <body>
-​	<h1>PushNoti</h1>
-  <p>hash: 12345678912345
-  </p>
-	<button onclick="window.location.reload();"><i class="fa fa-refresh"></i> Refresh</button>
-  <button onclick="window.history.back();"><i class="fa fa-home"></i> Go home</button>
-  <br/>
-  <button class="js-push-btn"><i class="fa fa-envelope"></i> Subscribe to Push Notifications</button>
-  <div>
-    <p>put here publickey:</p>
-    <input type="text" class="noti-public-key-text"/>
+    <div class="header">
+      <h1>Push Noti</h1>
+    </div>
+    <div class="navbar">
+      <a onclick="window.location.reload();" href="#" class="active"><i class="fa fa-refresh"></i> Refresh</a>
+      <a href="#" class="right" onclick="window.history.back();"><i class="fa fa-home"></i> Go home</a>
+    </div>
+    <div class="content">
+      <p>hash: 12345678912345</p>
+      <div>
+        <p>put here publickey:
+          <input type="text" class="noti-public-key-text" style="width:150px"/>
+        </p>
+      </div>
+      <button class="js-push-btn"><i class="fa fa-envelope"></i> Subscribe to Push Notifications</button>
+      
+      <br/>
+      <p class="bold subscription-info"></p>
+            
+      <div class="subscription-details js-subscription-details is-invisible">
+        your subscription code: 
+        <input type="text" class="js-subscription-json" style="width: 100px"/>
+        <br/>
+        <button class="js-copy-subs-code"><i class="fa fa-clipboard"></i> Copy it</button>
+      </div>
   </div>
-    
-  <h3>
-    Substriction:
-  </h3>
-  <h5>
-    <p class="subscription-info"></p>
-  </h5>
   
-  <section class="subscription-details js-subscription-details is-invisible">
-    your subscription code: 
-    <input type="text" class="js-subscription-json"/>
-    <button class="js-copy-subs-code"><i class="fa fa-clipboard"></i> Copy it</button>
-    
-  </section>
+  <br/>
+  <div style="display:none">
+    <p class="bold">
+      Message form push:
+    </p>
+    <p id="pushMsg"></p>
+  </div>
   
   
   <script src="scripts/main.js"></script>
-  <script>
-    // Sprawdź czy SW jest obsługiwany
-    debugger
-    if (navigator.serviceWorker) {
-        // Sprawdz czy na stronie są juz zarejestrowane jakies SW
-        navigator.serviceWorker.getRegistrations()
-        .then(registrations => {
-            // Jezeli nie ma to zarejestruj swoj SW
-            if (registrations.length === 0) {
-                navigator.serviceWorker.register('serviceWorker.js');
-            }})
-        .then(() => {
-        // Zwróc aktualną rejestrację SW
-          
-          // Pobierz z SW wszystkie notyfikacje
-          debugger
-            navigator.serviceWorker.ready.then((registration) => {
-                registration.getNotifications().then((notification) => {
-                  
-                    console.log("NOTI NOTI"+notification);
-                })
-            });
-          
-            return navigator.serviceWorker.ready;
-        })
-        .then(registration => {
-            console.log('Tu będzie blok kodu z Background Sync');
-        })
-  
-  </script>
 
 </body>
 </html>

@@ -53,7 +53,6 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  debugger
     console.log('[ServiceWorker] Fetch', event.request.url);
     // 1. Jeśli nie pobierasz zasobów to nie uruchamiasz mechanizmu
     if (event.request.method != 'GET') return;
@@ -92,6 +91,7 @@ self.addEventListener('push', function(event) {
   console.log('[Service Worker] Push Received.');
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
+  
   const title = 'Push Codelab';
   const options = {
     body: 'MSG: '+event.data.text(),
@@ -104,7 +104,6 @@ self.addEventListener('push', function(event) {
 
 self.addEventListener('notificationclick', function(event) {
   console.log('[Service Worker] Notification click Received.');
-  debugger;
   event.notification.close();
 
   event.waitUntil(

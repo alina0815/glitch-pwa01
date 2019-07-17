@@ -40,7 +40,6 @@ function initializeUI() {
 		  subscribeUser();
 		}
 	  });
-	
   // Set the initial subscription value
   swRegistration.pushManager.getSubscription()
   .then(function(subscription) {
@@ -50,10 +49,10 @@ function initializeUI() {
 	
     if (isSubscribed) {
       console.log('User IS subscribed.');
-      subscribeElem.textContent="status: User IS subscribed."
+      subscribeElem.textContent="Subscribe status: User IS subscribed."
     } else {
       console.log('User is NOT subscribed.');
-      subscribeElem.textContent="status: User is NOT subscribed."
+      subscribeElem.textContent="Subscribe status: User is NOT subscribed."
     }
 
     updateBtn();
@@ -61,6 +60,7 @@ function initializeUI() {
   
   copyCodeButton.addEventListener('click', function() {
 		/* Get the text field */
+    debugger
     var copyText = document.querySelector('.js-subscription-json');
 
     /* Select the text field */
@@ -82,7 +82,7 @@ function subscribeUser() {
   })
   .then(function(subscription) {
     console.log('User is subscribed.');
-    subscribeElem.textContent="status: User is subscribed."
+    subscribeElem.textContent="Subscribe status: User is subscribed."
 
     updateSubscriptionOnServer(subscription);
 
@@ -110,7 +110,7 @@ function unsubscribeUser() {
     updateSubscriptionOnServer(null);
 
     console.log('User is unsubscribed.');
-    subscribeElem.textContent="status: User is unsubscribed."
+    subscribeElem.textContent="Subscribe status: User is unsubscribed."
     isSubscribed = false;
 
     updateBtn();
@@ -149,20 +149,20 @@ if (Notification.permission === 'denied') {
   pushButton.disabled = false;
 }
 
-if ('serviceWorker' in navigator && 'PushManager' in window) {
-      console.log('Service Worker and Push is supported');
+// Sprawdź czy SW jest obsługiwany
+  if (navigator.serviceWorker && 'PushManager' in window) {
+      // Sprawdz czy na stronie są juz zarejestrowane jakies SW
+    navigator.serviceWorker.getRegistrations().then(function(swReg) {
+      console.log('Service Worker is registered', swReg);
 
-      navigator.serviceWorker.register('service-worker.js')
-      .then(function(swReg) {
-        console.log('Service Worker is registered', swReg);
+      swRegistration = swReg[0];
+      initializeUI()
+    })
+    .catch(function(error) {
+      console.error('Service Worker Error', error);
+    });
+} else {
+  console.warn('Push messaging is not supported');
+  pushButton.textContent = 'Push Not Supported';
+}
 
-        swRegistration = swReg;
-        initializeUI()
-      })
-      .catch(function(error) {
-        console.error('Service Worker Error', error);
-      });
-    } else {
-      console.warn('Push messaging is not supported');
-      pushButton.textContent = 'Push Not Supported';
-    }

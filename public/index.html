@@ -16,29 +16,35 @@
   <!-- Add meta theme-color -->
   <meta name="theme-color" content="#2F3BA2" />
   
-  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 ​
 </head>
 <body>
-​	<h1>Home - PWA01</h1>
-  <p>hash: 12345678912345
-  </p>
-	<button onclick="window.location.reload();"><i class="fa fa-refresh"></i> Refresh page</button>
-  <br/>
-  <button onclick="window.location.href='/pushNoti.html'"><i class="fa fa-envelope"></i> Go to notification</button>
-  <br/>
-  <button onclick="window.location.href='/photoManager.html'"><i class="fa fa-camera"></i> Go to photo manager</button>
-  <br/>
-  <button onclick="window.location.href='/callSomeone.html'"><i class="fa fa-phone"></i> Call friend</button>
-   
-  <br/>
-  <br/>
-  
-  <p id="pushData"></p>
+  <div class="header">
+    <h1>Home PWA01</h1>
+  </div>
+  <div class="navbar">
+    <a onclick="window.location.reload();" href="#" class="active"><i class="fa fa-refresh"></i> Refresh</a>
+    <a href="#" class="right" id="btnAdd" style="display:none"><i class="fa fa-plus-circle"></i> Add to home screen</a>
+  </div>
+  <div class="content">
+    <p>hash: 12345678912345
+    </p>
+    <button onclick="window.location.href='/pushNoti.html'"><i class="fa fa-envelope"></i> Go to notification</button>
+    <br/>
+    <button onclick="window.location.href='/photoManager.html'"><i class="fa fa-camera"></i> Go to photo manager</button>
+    <br/>
+    <button onclick="window.location.href='/callSomeone.html'"><i class="fa fa-phone"></i> Call friend</button>
+
+    <br/>
+    <br/>
+  </div>
   
   
   <script>
+    const btnAdd = document.getElementById('btnAdd');
+    debugger
     registerServiceWorker();
     
     function registerServiceWorker() {
@@ -64,6 +70,38 @@
       }
     }
     
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      debugger
+      // Prevent Chrome 67 and earlier from automatically showing the prompt
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      deferredPrompt = e;
+      // Update UI notify the user they can add to home screen
+      btnAdd.style.display = 'block';
+    });
+    
+    btnAdd.addEventListener('click', (e) => {
+      debugger;
+      // hide our user interface that shows our A2HS button
+      btnAdd.style.display = 'none';
+      // Show the prompt
+      deferredPrompt.prompt();
+      // Wait for the user to respond to the prompt
+      deferredPrompt.userChoice
+        .then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the A2HS prompt');
+          } else {
+            console.log('User dismissed the A2HS prompt');
+          }
+          deferredPrompt = null;
+        });
+    });
+    
+    window.addEventListener('appinstalled', (evt) => {
+      console.log('a2hs installed');
+    });
   </script>
 
 </body>
