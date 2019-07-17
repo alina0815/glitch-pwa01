@@ -10,50 +10,82 @@ const FILES_TO_CACHE = [
   '/offline2.html'
 ];
 
-self.addEventListener('install', (evt) => {
-  console.log('[ServiceWorker] Install');
-  // Precache static resources here.
-    evt.waitUntil(
-      caches.open(CACHE_NAME).then((cache) => {
-        console.log('[ServiceWorker] Pre-caching offline page');
-        return cache.addAll(FILES_TO_CACHE);
-      })
-  );
+self.addEventListener('install', event => {
+    console.log('[ServiceWorker] Install...');
+    // 1. Specjalna metoda SW która czeka na poprawną instalację by przejsc do kolejnych kroków
+    event.waitUntil(
+        // 2. Tworzysz cache o nazwie CACHE_NAME w którym będą przechowywane konkretne zasoby
+        caches.open(CACHE_NAME).then(cache => {
+            return cache.addAll(FILES_TO_CACHE);
+          /*lub 3. Tworzysz listę plików które mają byc tym cache podaj pośrednie linki tak jak w przykładzie
+                '/wp-content/themes/index.php',
+                '/wp-content/themes/main.bundle.js'
+            ]);
+            */
+        }, error => {
+            // 4. W razie błędów
+            console.log(`Installation failed with error: ${error}`);
+        })
+    );
+  //metoda to oszczędność życia. Zapewnia, że ​​każda nowa wersja pracownika serwisu przejmie stronę i zostanie natychmiast aktywowana.
+  //https://bitsofco.de/what-self-skipwaiting-does-to-the-service-worker-lifecycle/
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (evt) => {
-  console.log('[ServiceWorker] Activate');
-  // Remove previous cached data from disk.
-    evt.waitUntil(
-      caches.keys().then((keyList) => {
-        return Promise.all(keyList.map((key) => {
-          if (key !== CACHE_NAME) {
-            console.log('[ServiceWorker] Removing old cache', key);
-            return caches.delete(key);
-          }
-        }));
-      })
-  );
-  self.clients.claim();
+self.addEventListener('activate', event => {
+    console.log('[ServiceWorker] Activate');
+    // 1. Lista cache które mają zostac w pamieci
+    let cacheKeepList = [CACHE_NAME];
+    event.waitUntil(
+        // 2. Lista dostępnych cache
+        caches.keys().then( keyList => {
+            // 3. Sprawdź kolejno kazdo cache w SW
+            return Promise.all(keyList.map(function(key) {
+            // 4. Jeśli cache nie jest aktualne to je usuń
+            if (cacheKeepList.indexOf(key) === -1) {
+                console.log('[ServiceWorker] Removing old cache', key);
+                return caches.delete(key);
+                }
+            }));
+        })
+    );
+    self.clients.claim();
 });
 
-self.addEventListener('fetch', (evt) => {
-  console.log('[ServiceWorker] Fetch', evt.request.url);
-  // Add fetch event handler here.
-  if (evt.request.mode !== 'navigate') {
-  // Not a page navigation, bail.
-  return;
-}
-evt.respondWith(
-    fetch(evt.request)
-        .catch(() => {
-          return caches.open(CACHE_NAME)
-              .then((cache) => {
-                return cache.match('index.html');
-              });
-        })
-);
+self.addEventListener('fetch', event => {
+  debugger
+    console.log('[ServiceWorker] Fetch', event.request.url);
+    // 1. Jeśli nie pobierasz zasobów to nie uruchamiasz mechanizmu
+    if (event.request.method != 'GET') return;
+    if (event.request.mode !== 'navigate') {
+      // Not a page navigation, bail.
+      return;
+    }
+    event.respondWith(
+        fetch(event.request)
+            .catch(() => {
+              return caches.open(CACHE_NAME)
+                  .then((cache) => {
+                    return cache.match('index.html');
+                  });
+            })
+    );
+    
+  /*  // 2. Analiza wyników
+    event.respondWith(async function() {
+        // 3. Sprawdzasz zawarotśc cache i porownojesz z wynikami GETow
+        const cache = await caches.open(CACHE_NAME);
+        const cachedResponse = await cache.match(event.request);
+        if (cachedResponse) {
+            // 4. Jesli cache sie zgadza z pobieranymi zasobami to uzyj cache SW
+            // i uzupelnij cache o nowe zasoby ktore sie pojawiaja
+            event.waitUntil(cache.add(event.request));
+            return cachedResponse;
+        }
+        // 5. Jesli zadnych potrzebych zasobow nie ma w zdefiniowanym cache to pobieraj z sieci
+        return fetch(event.request);
+    }());
+    */
 });
 
 self.addEventListener('push', function(event) {

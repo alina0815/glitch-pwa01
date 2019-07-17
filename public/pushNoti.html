@@ -49,6 +49,36 @@
   
   
   <script src="scripts/main.js"></script>
+  <script>
+    // Sprawdź czy SW jest obsługiwany
+    debugger
+    if (navigator.serviceWorker) {
+        // Sprawdz czy na stronie są juz zarejestrowane jakies SW
+        navigator.serviceWorker.getRegistrations()
+        .then(registrations => {
+            // Jezeli nie ma to zarejestruj swoj SW
+            if (registrations.length === 0) {
+                navigator.serviceWorker.register('serviceWorker.js');
+            }})
+        .then(() => {
+        // Zwróc aktualną rejestrację SW
+          
+          // Pobierz z SW wszystkie notyfikacje
+          debugger
+            navigator.serviceWorker.ready.then((registration) => {
+                registration.getNotifications().then((notification) => {
+                  
+                    console.log("NOTI NOTI"+notification);
+                })
+            });
+          
+            return navigator.serviceWorker.ready;
+        })
+        .then(registration => {
+            console.log('Tu będzie blok kodu z Background Sync');
+        })
+  
+  </script>
 
 </body>
 </html>

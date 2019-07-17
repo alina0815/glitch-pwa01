@@ -34,54 +34,36 @@
    
   <br/>
   <br/>
-  <button class="add-button">Add to home screen</button>
+  
+  <p id="pushData"></p>
+  
   
   <script>
+    registerServiceWorker();
     
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-      console.log('Service Worker and Push is supported');
-
-      navigator.serviceWorker.register('service-worker.js')
-      .then(function(swReg) {
-        console.log('Service Worker is registered', swReg);
-
-        swRegistration = swReg;
-      })
-      .catch(function(error) {
-        console.error('Service Worker Error', error);
-      });
-    } else {
-      console.warn('Push messaging is not supported');
-      pushButton.textContent = 'Push Not Supported';
+    function registerServiceWorker() {
+      // 1. Sprawdź czy Service Worker jest obsługiwany w przeglądarce
+      if ('serviceWorker' in navigator && 'PushManager' in window) {
+          console.log('Service Worker and Push is supported');
+          // 2. Kiedy strona jest załadowana
+          window.addEventListener('load', function() {
+            // 3. Zarejestruj SW zdefiniowany w pliku znajdującym się w katalogu
+            navigator.serviceWorker.register('/service-worker.js')
+            // 4. Jeśli rejestracja się powiodła to wyświetl komunikat sukcesu
+            .then(function(registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                  // 5. Jeśli rejestracja się nie powiodła to wyświetl komunikat błędu
+                    console.log('ServiceWorker registration failed: ', err);
+              });
+            
+          });
+      } else {
+          console.warn('Push messaging is not supported');
+          pushButton.textContent = 'Push Not Supported';
+      }
     }
     
-    let deferredPrompt;
-    const addBtn = document.querySelector('.add-button');
-    addBtn.style.display = 'none';
-    window.addEventListener('beforeinstallprompt', (e) => {
-      // Prevent Chrome 67 and earlier from automatically showing the prompt
-      e.preventDefault();
-      // Stash the event so it can be triggered later.
-      deferredPrompt = e;
-      // Update UI to notify the user they can add to home screen
-      addBtn.style.display = 'block';
-
-      addBtn.addEventListener('click', (e) => {
-        // hide our user interface that shows our A2HS button
-        addBtn.style.display = 'none';
-        // Show the prompt
-        deferredPrompt.prompt();
-        // Wait for the user to respond to the prompt
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              console.log('User accepted the A2HS prompt');
-            } else {
-              console.log('User dismissed the A2HS prompt');
-            }
-            deferredPrompt = null;
-          });
-      });
-    });
   </script>
 
 </body>
